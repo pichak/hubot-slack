@@ -14,7 +14,7 @@ class SlackTextMessage extends TextMessage
   # rawText    - The unparsed message text
   # rawMessage - The Slack Message object
   constructor: (@user, @text, @rawText, @rawMessage) ->
-    super @user, @text, @rawMessage.ts
+    super @user, @text.replace(/https?:\/\//,''), @rawMessage.ts
 
 class SlackRawMessage extends Message
   # Represents Slack messages that are not suitable to treat as text messages.
