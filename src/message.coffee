@@ -14,7 +14,14 @@ class SlackTextMessage extends TextMessage
   # rawText    - The unparsed message text
   # rawMessage - The Slack Message object
   constructor: (@user, @text, @rawText, @rawMessage) ->
-    super @user, @text.replace(/https?:\/\//,''), @rawMessage.ts
+    super @user, @text, @rawMessage.ts
+
+  match: (regex) ->
+    if m = @text.match '^\\s*(@?' + @rawMessage._client.self.name + '[:,]?\\s+)'
+      raw = m[1] + @rawText.replace(/^<@.*>:\s*/,'').replace(/<.*?\|(.+?)>/g,'$1')
+      raw.match regex
+    else
+      @text.match regex
 
 class SlackRawMessage extends Message
   # Represents Slack messages that are not suitable to treat as text messages.
