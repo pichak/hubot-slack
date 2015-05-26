@@ -18,7 +18,7 @@ class SlackTextMessage extends TextMessage
 
   match: (regex) ->
     if m = @text.match '^\\s*(@?' + @rawMessage._client.self.name + '[:,]?\\s+)'
-      raw = m[1] + @rawText.replace(/^<@.*>:\s*/,'').replace(/<.*?\|(.+?)>/g,'$1')
+      raw = m[1] + @rawText.replace(/^<@.*>:\s*/,'').replace(/<(?:[^>]+\|)?(.+?)>/g,'$1')
       raw.match regex
     else
       @text.match regex
